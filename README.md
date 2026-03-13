@@ -1,70 +1,264 @@
-# Getting Started with Create React App
+# Desafio 01 - Calculadora em React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicacao web de calculadora desenvolvida em React com interface responsiva, componentes reutilizaveis e suporte a execucao local ou via Docker.
 
-## Available Scripts
+## Visao Geral
 
-In the project directory, you can run:
+O projeto implementa uma calculadora simples com:
 
-### `npm start`
+- Soma
+- Subtracao
+- Multiplicacao
+- Divisao
+- Operacao `%`
+- Limpeza do visor
+- Calculo de resultado
+- Layout centralizado e responsivo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+A interface foi organizada em componentes reutilizaveis para melhorar manutencao e legibilidade do codigo.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tecnologias Utilizadas
 
-### `npm test`
+- React
+- Styled Components
+- Create React App
+- Jest + Testing Library
+- Docker
+- Nginx para entrega da versao de producao em container
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Funcionalidades
 
-### `npm run build`
+- Visor para exibicao da expressao e do resultado
+- Teclado com botoes numericos e operadores
+- Tratamento basico de erro no visor
+- Controle para evitar multiplos pontos decimais no mesmo numero
+- Substituicao do operador final quando o usuario digita outro operador em seguida
+- Avaliacao da expressao com precedencia entre operacoes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Observacao Sobre o Operador `%`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Nesta implementacao, `%` foi tratado como operacao de modulo ou resto da divisao.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Exemplos:
 
-### `npm run eject`
+- `10 % 3 = 1`
+- `20 % 6 = 2`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Se o objetivo for usar porcentagem comercial, como `200 + 10%`, a regra precisa ser alterada.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Estrutura do Projeto
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```text
+desafio01-calculador/
+├── public/
+├── src/
+│   ├── Components/
+│   │   ├── Button/
+│   │   ├── Calculator/
+│   │   └── Input/
+│   ├── constants/
+│   │   └── calculator.js
+│   ├── utils/
+│   │   ├── calculator.js
+│   │   └── calculator.test.js
+│   ├── App.js
+│   ├── global.js
+│   ├── index.js
+│   └── styles.js
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Requisitos
 
-## Learn More
+Para executar localmente sem Docker:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Node.js 18 ou superior
+- npm 8 ou superior
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Para executar com Docker:
 
-### Code Splitting
+- Docker
+- Docker Compose Plugin (`docker compose`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Como Instalar Localmente
 
-### Analyzing the Bundle Size
+1. Clone o repositorio:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+git clone <url-do-repositorio>
+```
 
-### Making a Progressive Web App
+2. Entre na pasta do projeto:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+cd desafio01-calculador
+```
 
-### Advanced Configuration
+3. Instale as dependencias:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm install
+```
 
-### Deployment
+## Como Executar em Desenvolvimento
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Inicie o servidor de desenvolvimento:
 
-### `npm run build` fails to minify
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+A aplicacao ficara disponivel em:
+
+```text
+http://localhost:3000
+```
+
+## Como Executar os Testes
+
+```bash
+npm test -- --watchAll=false
+```
+
+Esse comando executa os testes unitarios da logica da calculadora sem abrir o modo interativo de watch.
+
+## Como Gerar Build de Producao
+
+```bash
+npm run build
+```
+
+O resultado sera gerado na pasta `build/`.
+
+## Como Executar com Docker
+
+O projeto possui configuracao para desenvolvimento e producao.
+
+### Ambiente de Desenvolvimento com Docker
+
+Executa a aplicacao React com hot reload:
+
+```bash
+docker compose up app-dev
+```
+
+A aplicacao ficara disponivel em:
+
+```text
+http://localhost:3000
+```
+
+### Ambiente de Producao com Docker
+
+Gera o build e serve a aplicacao com Nginx:
+
+```bash
+docker compose up app-prod --build
+```
+
+A aplicacao ficara disponivel em:
+
+```text
+http://localhost:8080
+```
+
+## Como Parar os Containers
+
+```bash
+docker compose down
+```
+
+## Principais Arquivos de Infraestrutura
+
+- `Dockerfile`: define os estagios de desenvolvimento e producao
+- `docker-compose.yml`: orquestra os servicos `app-dev` e `app-prod`
+- `.dockerignore`: reduz o contexto enviado ao build do Docker
+- `nginx/nginx.conf`: configura o servidor para entregar a SPA corretamente
+
+## Padrao de Componentizacao
+
+O projeto foi organizado para separar responsabilidades:
+
+- `App.js`
+  Responsavel pela composicao da tela e controle de estado principal.
+
+- `src/Components/Button`
+  Componente reutilizavel para os botoes da calculadora.
+
+- `src/Components/Input`
+  Componente do visor.
+
+- `src/Components/Calculator`
+  Estrutura visual do card e do teclado.
+
+- `src/constants/calculator.js`
+  Constantes da calculadora, como botoes, operadores e valores iniciais.
+
+- `src/utils/calculator.js`
+  Regras de negocio da calculadora, incluindo manipulacao de entrada e avaliacao da expressao.
+
+## Boas Praticas Aplicadas
+
+- Separacao entre logica de negocio e interface
+- Componentes reutilizaveis
+- Constantes centralizadas
+- Testes unitarios para a logica principal
+- Estilizacao isolada com Styled Components
+- Layout responsivo
+
+## Fluxo Recomendado Para Outros Desenvolvedores
+
+1. Instalar dependencias com `npm install`
+2. Executar `npm start` para desenvolvimento local
+3. Validar alteracoes com `npm test -- --watchAll=false`
+4. Validar build com `npm run build`
+5. Opcionalmente validar o ambiente em container com `docker compose up app-dev`
+
+## Possiveis Melhorias Futuras
+
+- Suporte a porcentagem comercial
+- Historico de operacoes
+- Suporte a teclado fisico
+- Melhorias de acessibilidade
+- Testes de interface com React Testing Library
+- Deploy automatizado
+
+## Solucao de Problemas
+
+### Porta 3000 ocupada
+
+Se outra aplicacao estiver usando a porta `3000`, finalize o processo conflitante ou altere a porta de execucao.
+
+### Porta 8080 ocupada
+
+Se estiver usando a versao de producao com Docker e a porta `8080` estiver ocupada, altere o mapeamento no `docker-compose.yml`.
+
+### Dependencias nao instaladas
+
+Se o projeto falhar ao iniciar localmente, remova `node_modules` e reinstale:
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Alteracoes no Docker nao refletidas
+
+Refaca o build da imagem:
+
+```bash
+docker compose up app-prod --build
+```
+
+## Scripts Disponiveis
+
+- `npm start`: inicia a aplicacao em modo desenvolvimento
+- `npm test`: executa os testes
+- `npm run build`: gera a build de producao
+- `npm run eject`: ejeta a configuracao do Create React App
+
+## Autor
+
+Projeto desenvolvido como desafio pratico para construcao de uma calculadora em React.
