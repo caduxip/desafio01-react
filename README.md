@@ -11,6 +11,7 @@ O projeto implementa uma calculadora simples com:
 - Multiplicacao
 - Divisao
 - Operacao `%`
+- Logaritmo base 10
 - Limpeza do visor
 - Calculo de resultado
 - Layout centralizado e responsivo
@@ -34,17 +35,34 @@ A interface foi organizada em componentes reutilizaveis para melhorar manutencao
 - Controle para evitar multiplos pontos decimais no mesmo numero
 - Substituicao do operador final quando o usuario digita outro operador em seguida
 - Avaliacao da expressao com precedencia entre operacoes
+- Aplicacao de logaritmo base 10 sobre o valor atual do visor
 
 ## Observacao Sobre o Operador `%`
 
-Nesta implementacao, `%` foi tratado como operacao de modulo ou resto da divisao.
+Nesta implementacao, `%` foi tratado como porcentagem de calculadora.
 
 Exemplos:
 
-- `10 % 3 = 1`
-- `20 % 6 = 2`
+- `50% = 0.5`
+- `200 + 10% = 220`
+- `200 - 10% = 180`
+- `200 x 10% = 20`
+- `200 / 10% = 2000`
 
-Se o objetivo for usar porcentagem comercial, como `200 + 10%`, a regra precisa ser alterada.
+## Observacao Sobre o Operador `log`
+
+O botao `log` aplica logaritmo na base 10 ao valor atual do visor.
+
+Exemplos:
+
+- `log(100) = 2`
+- `log(1000) = 3`
+
+Se houver uma expressao no visor, a calculadora resolve a expressao primeiro e depois aplica o logaritmo.
+
+Exemplo:
+
+- `10 + 90`, seguido de `log`, resulta em `2`
 
 ## Estrutura do Projeto
 
