@@ -6,14 +6,17 @@ import {
   BUTTONS,
   ERROR_DISPLAY,
   INITIAL_DISPLAY,
+  LOGARITHM_OPERATOR,
   PERCENTAGE_OPERATOR,
 } from './constants/calculator';
 import { Container } from './styles';
 import {
+  applyLogarithm,
   appendNumber,
   appendOperator,
   appendPercentage,
   evaluateExpression,
+  isLogarithmOperator,
   isOperator,
   isPercentageOperator,
 } from './utils/calculator';
@@ -23,7 +26,12 @@ const getButtonVariant = (button) => {
     return 'danger';
   }
 
-  if (isOperator(button) || isPercentageOperator(button) || button === '=') {
+  if (
+    isOperator(button) ||
+    isPercentageOperator(button) ||
+    isLogarithmOperator(button) ||
+    button === '='
+  ) {
     return 'operator';
   }
 
@@ -53,6 +61,19 @@ function App() {
 
     if (value === '=') {
       handleCalculate();
+      return;
+    }
+
+    if (value === LOGARITHM_OPERATOR) {
+      if (isOperator(display.slice(-1))) {
+        return;
+      }
+
+      try {
+        setDisplay(applyLogarithm(display));
+      } catch (error) {
+        setDisplay(ERROR_DISPLAY);
+      }
       return;
     }
 

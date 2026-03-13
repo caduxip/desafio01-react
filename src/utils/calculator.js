@@ -1,6 +1,7 @@
 import {
   ERROR_DISPLAY,
   INITIAL_DISPLAY,
+  LOGARITHM_OPERATOR,
   OPERATORS,
   PERCENTAGE_OPERATOR,
 } from '../constants/calculator';
@@ -26,6 +27,7 @@ const resolveOperation = (left, operator, right) => {
 
 export const isOperator = (value) => OPERATORS.includes(value);
 export const isPercentageOperator = (value) => value === PERCENTAGE_OPERATOR;
+export const isLogarithmOperator = (value) => value === LOGARITHM_OPERATOR;
 
 const isNumericToken = (value) => value !== undefined && !Number.isNaN(Number(value));
 
@@ -146,4 +148,14 @@ export const evaluateExpression = (expression) => {
   }
 
   return String(result);
+};
+
+export const applyLogarithm = (expression) => {
+  const resolvedValue = Number(evaluateExpression(expression));
+
+  if (resolvedValue <= 0) {
+    throw new Error('Invalid logarithm input');
+  }
+
+  return String(Math.log10(resolvedValue));
 };
