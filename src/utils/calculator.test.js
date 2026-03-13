@@ -1,6 +1,7 @@
 import {
   appendNumber,
   appendOperator,
+  appendPercentage,
   evaluateExpression,
 } from './calculator';
 
@@ -19,10 +20,20 @@ describe('calculator utils', () => {
     expect(appendNumber('Erro', '.')).toBe('0.');
   });
 
+  it('appends percentage only once to the current number', () => {
+    expect(appendPercentage('50')).toBe('50%');
+    expect(appendPercentage('50%')).toBe('50%');
+    expect(appendPercentage('12+')).toBe('12+');
+  });
+
   it('evaluates expressions respecting operator precedence', () => {
     expect(evaluateExpression('10+2x3')).toBe('16');
     expect(evaluateExpression('20/5+1')).toBe('5');
-    expect(evaluateExpression('10%3+2')).toBe('3');
+    expect(evaluateExpression('50%')).toBe('0.5');
+    expect(evaluateExpression('200+10%')).toBe('220');
+    expect(evaluateExpression('200-10%')).toBe('180');
+    expect(evaluateExpression('200x10%')).toBe('20');
+    expect(evaluateExpression('200/10%')).toBe('2000');
   });
 
   it('throws when the expression result is not finite', () => {

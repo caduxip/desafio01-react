@@ -2,13 +2,20 @@ import { useState } from 'react';
 import Button from './Components/Button';
 import Calculator from './Components/Calculator';
 import Input from './Components/Input';
-import { BUTTONS, ERROR_DISPLAY, INITIAL_DISPLAY } from './constants/calculator';
+import {
+  BUTTONS,
+  ERROR_DISPLAY,
+  INITIAL_DISPLAY,
+  PERCENTAGE_OPERATOR,
+} from './constants/calculator';
 import { Container } from './styles';
 import {
   appendNumber,
   appendOperator,
+  appendPercentage,
   evaluateExpression,
   isOperator,
+  isPercentageOperator,
 } from './utils/calculator';
 
 const getButtonVariant = (button) => {
@@ -16,7 +23,7 @@ const getButtonVariant = (button) => {
     return 'danger';
   }
 
-  if (isOperator(button) || button === '=') {
+  if (isOperator(button) || isPercentageOperator(button) || button === '=') {
     return 'operator';
   }
 
@@ -46,6 +53,11 @@ function App() {
 
     if (value === '=') {
       handleCalculate();
+      return;
+    }
+
+    if (value === PERCENTAGE_OPERATOR) {
+      setDisplay((current) => appendPercentage(current));
       return;
     }
 
